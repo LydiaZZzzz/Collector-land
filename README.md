@@ -1,5 +1,14 @@
 # Magic Archive - Chiikawa Merchandise Browser
 
+
+## 🔧 Setup Instructions
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+
+
 ## 🧁 Project Scope  
 This project focuses on designing and developing a merchandise browsing platform based on the popular Japanese animation *Chiikawa*. The platform allows users to explore characters from the *Chiikawa* universe, view detailed character and product information, and save favorite merchandise.  
 
