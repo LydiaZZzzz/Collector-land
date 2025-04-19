@@ -1,7 +1,7 @@
 # Magic Archive - Chiikawa Merchandise Browser
 
 
-## 🔧 Setup Instructions
+## 🔧 Setup Instructions (Already set in the local file)
 
 ```bash
 python3 -m venv venv
