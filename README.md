@@ -83,6 +83,6 @@ GitHub Repo: [https://github.com/LydiaZZzzz/Collector-land](https://github.com/L
 | Date  | Progress                                                                 |
 |-------|--------------------------------------------------------------------------|
 | 4.18  | Completed the planned information architecture, including user flows and core page structure. Initiated homepage development ahead of schedule using Streamlit. Created initial file and folder organization (`static/`, `webhomepage.py`, `requirements.txt`). Implemented a top navigation bar with fixed positioning and clickable buttons. Designed and overlaid interactive product hover dots on a visual banner. Documented setup instructions and development status clearly in `README.md`. |
+| Next  | Planned for 4.25: Complete low-fidelity wireframes in Figma; implement layout for character profile pages; add placeholder merchandise data and begin linking filter logic. |
 
-| Next   | Planned for 4.25: Complete low-fidelity wireframes in Figma; implement layout for character profile pages; add placeholder merchandise data and begin linking filter logic. |
 
