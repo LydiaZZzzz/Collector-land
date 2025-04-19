@@ -64,3 +64,11 @@ For more details or project inquiries, please contact:
 Yunqing Zhao Client Email: yzhao73@uw.edu
 Shangming Zhuo Developer Email: oiviauw@uw.edu  
 GitHub Repo: [https://github.com/LydiaZZzzz/Collector-land](https://github.com/LydiaZZzzz/Collector-land)
+
+---
+
+## 📌 Progress Log
+
+| Date  | Progress                                                                 |
+|-------|--------------------------------------------------------------------------|
+| 4.18  | Completed information architecture as planned and began early development of the homepage web interface. |
