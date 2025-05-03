@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Detail - CollectorLand</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Baloo+2:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --main-bg: #F69BAE;
+      --main-white: #fff;
+      --main-title: #fff;
+      --main-text: #4a3c3b;
+      --main-subtitle: #4a3c3b;
+      --main-border: #F69BAE;
+      --main-btn-bg: #fff;
+      --main-btn-text: #4a3c3b;
+      --main-btn-border: #F9C5CE;
+      --main-link: #3b82f6;
+    }
+    body {
+      margin: 0;
+      font-family: 'Quicksand', 'Baloo 2', Arial, sans-serif;
+      background: var(--main-bg);
+      color: var(--main-text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 70px;
+      background: var(--main-bg);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 10;
+      padding: 0 4vw;
+      box-sizing: border-box;
+    }
+    .navbar-logo {
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: var(--main-title);
+      letter-spacing: 0.18em;
+      white-space: nowrap;
+    }
+    .navbar-icons {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      overflow-x: auto;
+      max-width: 60vw;
+      flex-shrink: 1;
+      flex-wrap: nowrap;
+    }
+    .navbar-icon-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      padding: 4px;
+      min-width: 48px;
+      max-width: 80px;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+    .navbar-icon {
+      width: 32px;
+      height: 32px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+      transition: all 0.3s ease;
+      stroke: white;
+    }
+    .navbar-icon-group:hover .navbar-icon {
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+      stroke: #F69BAE;
+    }
+    .navbar-icon-group.active .navbar-icon {
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+      stroke: #E88BA0;
+      fill: #E88BA0;
+    }
+    .navbar-label {
+      font-size: 0.8rem;
+      color: var(--main-title);
+      font-weight: 700;
+      text-transform: uppercase;
+      white-space: nowrap;
+      text-align: center;
+      transition: all 0.3s ease;
+      border-bottom: none !important;
+    }
+    .navbar-icon-group:hover .navbar-label {
+      color: #F69BAE;
+    }
+    .navbar-icon-group.active .navbar-label {
+      color: #E88BA0;
+    }
+    @media (max-width: 700px) {
+      .navbar {
+        padding: 0 8px;
+        height: 56px;
+      }
+      .navbar-logo {
+        font-size: 1.2rem;
+        letter-spacing: 0.15em;
+      }
+      .navbar-icons {
+        gap: 0.5rem;
+        max-width: 50vw;
+      }
+      .navbar-label {
+        font-size: 0.7rem;
+      }
+      .navbar-icon {
+        width: 22px;
+        height: 22px;
+      }
+      .navbar-icon-group {
+        min-width: 32px;
+        max-width: 48px;
+        padding: 2px 4px;
+      }
+    }
+    .main-content {
+      margin-top: 90px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    .main-image {
+      width: 100%;
+      max-width: 420px;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      margin-bottom: 32px;
+      background: #fff;
+      object-fit: contain;
+      display: block;
+    }
+    .detail-section {
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      align-items: flex-start;
+      background: var(--main-white);
+      border-radius: 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      padding: 32px 24px;
+    }
+    .left-thumbs {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      min-width: 120px;
+      max-width: 160px;
+    }
+    .thumbs-container {
+      position: relative;
+      width: 120px;
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .thumb-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 12px;
+      background: #f7f7f7;
+      border: 2px solid #f3c5d6;
+      box-sizing: border-box;
+      transition: opacity 0.3s;
+      position: absolute;
+      left: 0; top: 0;
+      opacity: 0;
+      z-index: 1;
+    }
+    .thumb-img.active {
+      opacity: 1;
+      z-index: 2;
+    }
+    .thumb-nav {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .thumb-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #f3c5d6;
+      border: 2px solid #F69BAE;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .thumb-dot.active {
+      background: #F69BAE;
+    }
+    .right-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      min-width: 220px;
+    }
+    .product-title {
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: var(--main-text);
+      margin-bottom: 8px;
+    }
+    .product-price {
+      font-size: 1.3rem;
+      color: #E88BA0;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .product-detail {
+      font-size: 1.1rem;
+      color: #4a3c3b;
+      margin-bottom: 4px;
+    }
+    .product-link {
+      font-size: 1rem;
+      color: var(--main-link);
+      text-decoration: underline;
+      word-break: break-all;
+    }
+    @media (max-width: 900px) {
+      .detail-section {
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+        padding: 20px 8px;
+      }
+      .main-image {
+        max-width: 90vw;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <div class="navbar-logo">CollectorLand</div>
+    <div class="navbar-icons">
+      <a class="navbar-icon-group" href="#">
+        <svg class="navbar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+        <div class="navbar-label">Likes</div>
+      </a>
+      <a class="navbar-icon-group" href="#">
+        <svg class="navbar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+        </svg>
+        <div class="navbar-label">All Items</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <!-- 商品大图 -->
+    <img class="main-image" src="products/chiikawa/Chiikawa_Bee_Mascot__Chiikawa_/image_11.jpg" alt="Happy Holiday Mascot (Usagi)" />
+
+    <div class="detail-section">
+      <!-- 左侧小图轮播 -->
+      <div class="left-thumbs">
+        <div class="thumbs-container">
+          <img class="thumb-img active" src="products/chiikawa/Chiikawa_Bee_Mascot__Chiikawa_/image_13.jpg" alt="thumb1" />
+          <img class="thumb-img" src="products/chiikawa/Chiikawa_Bee_Mascot__Chiikawa_/image_14.jpg" alt="thumb2" />
+          <img class="thumb-img" src="products/chiikawa/Chiikawa_Bee_Mascot__Chiikawa_/image_15.jpg" alt="thumb3" />
+        </div>
+        <div class="thumb-nav">
+          <div class="thumb-dot active"></div>
+          <div class="thumb-dot"></div>
+          <div class="thumb-dot"></div>
+        </div>
+      </div>
+      <!-- 右侧产品信息 -->
+      <div class="right-info">
+        <div class="product-title">Happy Holiday Mascot (Usagi)</div>
+        <div class="product-price">¥1650</div>
+        <div class="product-detail">尺寸：H140×W80×D55mm</div>
+        <div class="product-detail">材质：Plush</div>
+        <a class="product-link" href="https://chiikawamarket.jp/en/collections/nuigurumi-mascot/products/4582662905641" target="_blank">
+          官方网站：https://chiikawamarket.jp/en/collections/nuigurumi-mascot/products/4582662905641
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 小图轮播逻辑
+    const thumbs = document.querySelectorAll('.thumb-img');
+    const dots = document.querySelectorAll('.thumb-dot');
+    let current = 0;
+
+    function showThumb(idx) {
+      thumbs.forEach((img, i) => {
+        img.classList.toggle('active', i === idx);
+      });
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === idx);
+      });
+      current = idx;
+    }
+
+    dots.forEach((dot, idx) => {
+      dot.addEventListener('click', () => showThumb(idx));
+    });
+  </script>
+</body>
+</html>

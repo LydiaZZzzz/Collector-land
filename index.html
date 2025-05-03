@@ -1,0 +1,252 @@
+from zipfile import ZipFile
+import os
+import shutil
+
+# Clean up any previous attempt
+fixed_base = "/mnt/data/Collector-land-main-fixed"
+if os.path.exists(fixed_base):
+    shutil.rmtree(fixed_base)
+
+# Recreate directory structure
+html_path = os.path.join(fixed_base, "index.html")
+img_dir = os.path.join(fixed_base, "chiikawa_data/products")
+os.makedirs(img_dir, exist_ok=True)
+
+# Use the correct uploaded image and rename it
+image_input = "/mnt/data/截屏2025-05-02 01.40.03.png"
+image_output = os.path.join(img_dir, "promotion1.png")
+shutil.copy(image_input, image_output)
+
+# Regenerate fixed HTML with correct image path and navbar fixes
+fixed_html = f"""
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fuzzy Product Search Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Baloo+2:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --main-bg: #F69BAE;
+      --main-white: #fff;
+      --main-title: #fff;
+      --main-text: #4a3c3b;
+      --main-subtitle: #4a3c3b;
+      --main-border: #F69BAE;
+      --main-btn-bg: #fff;
+      --main-btn-text: #4a3c3b;
+      --main-btn-border: #F9C5CE;
+    }
+    body {
+      margin: 0;
+      font-family: 'Quicksand', 'Baloo 2', Arial, sans-serif;
+      background: var(--main-bg);
+      color: var(--main-text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 70px;
+      background: var(--main-bg);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 10;
+      padding: 0 4vw;
+      box-sizing: border-box;
+    }
+    .navbar-logo {
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: var(--main-title);
+      letter-spacing: 0.18em;
+      white-space: nowrap;
+    }
+    .navbar-icons {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      overflow-x: auto;
+      max-width: 60vw;
+      flex-shrink: 1;
+      flex-wrap: nowrap;
+    }
+    .navbar-icon-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      padding: 4px;
+      min-width: 48px;
+      max-width: 80px;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+    .navbar-icon {
+      width: 32px;
+      height: 32px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+      transition: all 0.3s ease;
+      stroke: white;
+    }
+    .navbar-icon-group:hover .navbar-icon {
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+      stroke: #F69BAE;
+    }
+    .navbar-icon-group.active .navbar-icon {
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+      stroke: #E88BA0;
+      fill: #E88BA0;
+    }
+    .navbar-label {
+      font-size: 0.8rem;
+      color: var(--main-title);
+      font-weight: 700;
+      text-transform: uppercase;
+      white-space: nowrap;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    .navbar-icon-group:hover .navbar-label {
+      color: #F69BAE;
+    }
+    .navbar-icon-group.active .navbar-label {
+      color: #E88BA0;
+    }
+    @media (max-width: 700px) {
+      .navbar {
+        padding: 0 8px;
+        height: 56px;
+      }
+      .navbar-logo {
+        font-size: 1.2rem;
+        letter-spacing: 0.15em;
+      }
+      .navbar-icons {
+        gap: 0.5rem;
+        max-width: 50vw;
+      }
+      .navbar-label {
+        font-size: 0.7rem;
+      }
+      .navbar-icon {
+        width: 22px;
+        height: 22px;
+      }
+      .navbar-icon-group {
+        min-width: 32px;
+        max-width: 48px;
+        padding: 2px 4px;
+      }
+    }
+    .main-content {
+      margin-top: -30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .promotion-img {
+      width: 100%;
+      max-width: 100vw;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 72px;
+    }
+    .promotion-img img {
+      width: 100%;
+      max-width: 100vw;
+      height: auto;
+      display: block;
+    }
+    .search-section {
+      width: 90vw;
+      max-width: 540px;
+      background: var(--main-white);
+      border-radius: 24px;
+      padding: 24px;
+      text-align: center;
+      border: 2px solid var(--main-btn-border);
+    }
+    .search-guide {
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .search-bar {
+      display: flex;
+      padding: 8px;
+      border: 2px solid var(--main-btn-border);
+      border-radius: 16px;
+      background: white;
+    }
+    .search-bar input {
+      flex: 1;
+      border: none;
+      font-size: 1rem;
+      outline: none;
+    }
+    .search-bar button {
+      margin-left: 10px;
+      padding: 6px 16px;
+      font-weight: bold;
+      border: 2px solid var(--main-btn-border);
+      border-radius: 10px;
+      background: white;
+      cursor: pointer;
+    }
+    .search-bar button:hover {
+      background: #f7b6c7;
+      border: 2px solid #f7b6c7;
+    }
+    .cloud-divider {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      line-height: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <div class="navbar-logo">CollectorLand</div>
+    <div class="navbar-icons">
+      <a class="navbar-icon-group" href="#">
+        <svg class="navbar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+        <div class="navbar-label">Likes</div>
+      </a>
+      <a class="navbar-icon-group" href="#">
+        <svg class="navbar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+        </svg>
+        <div class="navbar-label">All Items</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div class="promotion-img">
+        <img src="/Users/zhuoshangming/Desktop/collector-land/promotion2.png" alt="promotion" />
+    </div>
+
+    <div class="search-section">
+      <div class="search-guide">Enter a product name or a fuzzy description to discover your favorites!</div>
+      <form class="search-bar" onsubmit="event.preventDefault(); window.location.href='search.html';">
+        <input type="text" placeholder="e.g. plush toy, keychain, mug..." />
+        <button type="submit">Search</button>
+      </form>
+    </div>
+
+    <div class="cloud-divider">
+      <svg viewBox="0 0 1440 320" width="100%" height="280" preserveAspectRatio="none">
+        <path fill="#FADCE6" d="M0,160L48,181.3C96,203,192,245,288,234.7C384,224,480,160,576,144C672,128,768,160,864,186.7C960,213,1056,235,1152,229.3C1248,224,1344,192,1392,176L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+      </svg>
+    </div>
+  </div>
+</body>
+</html>
