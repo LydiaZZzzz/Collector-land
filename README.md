@@ -57,15 +57,16 @@ The target users are fans of the *Chiikawa* animation series who are interested 
 
 ## 🗓️ Timeline  
 
-| Date Range       | Task                                      |
-|------------------|-------------------------------------------|
-| April 11–18      | Information architecture                  |
-| April 18–25      | Low-fidelity wireframes                   |
-| April 25–May 2   | High-fidelity prototypes                  |
-| May 2–9          | Homepage development                      |
-| May 9–16         | Character page development                |
-| May 16–23        | Product pop-up and favorites page         |
-| May 23–30        | Final iteration and refinement            |
+| Date Range     | Task                                                              |
+| -------------- | ----------------------------------------------------------------- |
+| April 11–18    | Information architecture                                          |
+| April 18–25    | Low-fidelity wireframes                                           |
+| April 25–May 2 | High-fidelity prototypes                                          |
+| **May 2–9**    | **Homepage, product pop-up, and product detail page development** |
+| May 9–16       | Character page development                                        |
+| May 16–23      | Favorites page & interactive logic                                |
+| May 23–30      | Final iteration and refinement                                    |
+
 
 ---
 
@@ -81,8 +82,8 @@ GitHub Repo: [https://github.com/LydiaZZzzz/Collector-land](https://github.com/L
 ## 📌 Progress Log
 
 | Date  | Progress                                                                 |
-|-------|--------------------------------------------------------------------------|
-| 4.18  | Completed the planned information architecture, including user flows and core page structure. Initiated homepage development ahead of schedule using Streamlit. Created initial file and folder organization (`static/`, `webhomepage.py`, `requirements.txt`). Implemented a top navigation bar with fixed positioning and clickable buttons. Designed and overlaid interactive product hover dots on a visual banner. Documented setup instructions and development status clearly in `README.md`. |
-| Next  | Planned for 4.25: Complete low-fidelity wireframes in Figma; implement layout for character profile pages; add placeholder merchandise data and begin linking filter logic. |
+| 4.18 | Completed the planned information architecture, including user flows and core page structure. Initiated homepage development ahead of schedule using Streamlit. Created initial file and folder organization (`static/`, `webhomepage.py`, `requirements.txt`). Implemented a top navigation bar with fixed positioning and clickable buttons. Designed and overlaid interactive product hover dots on a visual banner. Documented setup instructions and development status clearly in `README.md`.                                                                                              |
+| 5.2  | Finished development of three key interfaces: `home.html`, `search.html`, and `product-detail.html`. Implemented a functional search bar on the homepage that navigates to the product pop-up. Built a product pop-up window with two working buttons: one for reshuffling products and one for returning to the homepage. Completed the product detail page layout, including a large image display and three-view switching feature. Also wrote an initial test file (`product-detail.test.js`) and resolved git push errors by submitting code via a protected-branch pull request from `dev`. |
+| Next | Planned for 5.9: Start character page development and integrate favorite toggling logic. Improve UI feedback (e.g. loading animations) and apply initial usability fixes based on internal testing.                                                                                                                                                                                                                                                                                                                                                                                               |
 
 
