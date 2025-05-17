@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Search Results - CollectorLand</title>
+  <title>Chiikawa SUPPA……!!!! Mascot (Usagi) - CollectorLand</title>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Baloo+2:wght@700&display=swap" rel="stylesheet" />
   <style>
     :root {
@@ -224,8 +224,8 @@
 
   <div class="main-content">
     <div class="product-modal">
-      <div class="product-name">Ultra Magical Chiikawa Bad Version Mascot</div>
-      <img class="product-image" src="products/chiikawa/_Pre-order__Chiikawa_Happy_Holiday_Mascot__Chiikawa___Shipping_starts_from_late_April_2024__No_cancellation_allowed_in_case_of_delay__/main.jpg" alt="Chiikawa Mascot" />
+      <div class="product-name">Chiikawa SUPPA……!!!! Mascot (Usagi)</div>
+      <img class="product-image" src="../products/usagi/Chiikawa_SUPPA_______Mascot__Usagi_/image_10.jpg" alt="Chiikawa SUPPA……!!!! Mascot (Usagi)" />
       <div class="button-group">
         <button class="button confirm">This is the one!</button>
         <button class="button">Try another match</button>
@@ -236,11 +236,34 @@
 
   <script>
     document.querySelector('.next-product').addEventListener('click', function() {
-      window.location.href = 'index.html';
+      window.location.href = '../../index.html';
     });
 
+    function getQueryParam(name) {
+      const url = new URL(window.location.href);
+      return url.searchParams.get(name);
+    }
+
     document.querySelector('.button:not(.confirm)').addEventListener('click', function() {
-      window.location.href = 'search2.html';
+      const q = getQueryParam('q');
+      const pages = getQueryParam('pages');
+      let idx = parseInt(getQueryParam('idx') || '0');
+      if (pages) {
+        const pageArr = pages.split(',');
+        if (pageArr.length <= 1) {
+          alert('没有更多相关商品');
+          return;
+        }
+        // 随机选一个不是当前 idx 的页面
+        let nextIdx;
+        do {
+          nextIdx = Math.floor(Math.random() * pageArr.length);
+        } while (nextIdx === idx && pageArr.length > 1);
+        const generatedDir = 'chiikawa_data/generated_pages/';
+        window.location.href =  pageArr[nextIdx] + "?q=" + encodeURIComponent(q) + "&pages=" + encodeURIComponent(pages) + "&idx=" + nextIdx;
+      } else {
+        window.location.href = '../../index.html';
+      }
     });
 
     document.querySelector('.button.confirm').addEventListener('click', function() {

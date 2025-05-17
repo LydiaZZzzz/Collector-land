@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Product Detail - CollectorLand</title>
+  <title>Chiikawa Bee Mascot (Usagi) - CollectorLand</title>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Baloo+2:wght@700&display=swap" rel="stylesheet" />
   <style>
     :root {
@@ -16,7 +16,6 @@
       --main-btn-bg: #fff;
       --main-btn-text: #4a3c3b;
       --main-btn-border: #F9C5CE;
-      --main-link: #3b82f6;
     }
     body {
       margin: 0;
@@ -126,127 +125,81 @@
       }
     }
     .main-content {
-      margin-top: 90px;
+      margin-top: 80px;
       display: flex;
       flex-direction: column;
       align-items: center;
       padding: 20px;
     }
-    .main-image {
-      width: 100%;
-      max-width: 420px;
-      border-radius: 20px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-      margin-bottom: 32px;
-      background: #fff;
-      object-fit: contain;
-      display: block;
-    }
-    .detail-section {
-      width: 100%;
-      max-width: 900px;
-      display: flex;
-      gap: 32px;
-      justify-content: center;
-      align-items: flex-start;
+    .product-modal {
       background: var(--main-white);
       border-radius: 24px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-      padding: 32px 24px;
+      padding: 20px;
+      width: 95%;
+      max-width: 800px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      text-align: center;
     }
-    .left-thumbs {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-      min-width: 120px;
-      max-width: 160px;
-    }
-    .thumbs-container {
-      position: relative;
-      width: 120px;
-      height: 160px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-    .thumb-img {
+    .product-image {
       width: 100%;
-      height: 100%;
-      object-fit: contain;
-      border-radius: 12px;
-      background: #f7f7f7;
-      border: 2px solid #f3c5d6;
-      box-sizing: border-box;
-      transition: opacity 0.3s;
-      position: absolute;
-      left: 0; top: 0;
-      opacity: 0;
-      z-index: 1;
+      max-width: 500px;
+      height: auto;
+      border-radius: 16px;
+      margin-bottom: 24px;
     }
-    .thumb-img.active {
-      opacity: 1;
-      z-index: 2;
-    }
-    .thumb-nav {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-top: 8px;
-    }
-    .thumb-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #f3c5d6;
-      border: 2px solid #F69BAE;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .thumb-dot.active {
-      background: #F69BAE;
-    }
-    .right-info {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-      min-width: 220px;
-    }
-    .product-title {
-      font-size: 2.1rem;
+    .product-name {
+      font-size: 2.2rem;
       font-weight: 700;
       color: var(--main-text);
-      margin-bottom: 8px;
+      margin-bottom: 40px;
     }
-    .product-price {
-      font-size: 1.3rem;
-      color: #E88BA0;
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 40px;
+    }
+    .button {
+      padding: 16px 32px;
+      border-radius: 12px;
       font-weight: 700;
-      margin-bottom: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid var(--main-btn-border);
+      background: var(--main-btn-bg);
+      color: var(--main-btn-text);
+      font-size: 1.2rem;
     }
-    .product-detail {
-      font-size: 1.1rem;
-      color: #4a3c3b;
-      margin-bottom: 4px;
+    .button:hover {
+      background: #f7b6c7;
+      border-color: #f7b6c7;
+      color: white;
     }
-    .product-link {
-      font-size: 1rem;
-      color: var(--main-link);
-      text-decoration: underline;
-      word-break: break-all;
+    .button.confirm {    
+      background: #F69BAE;
+      border-color: #F69BAE;
+      color: white;
     }
-    @media (max-width: 900px) {
-      .detail-section {
-        flex-direction: column;
-        align-items: center;
-        gap: 24px;
-        padding: 20px 8px;
-      }
-      .main-image {
-        max-width: 90vw;
-      }
+    .button.confirm:hover {      
+      background: #E88BA0;
+      border-color: #E88BA0;
+    }
+    .next-product {
+      margin-top: 24px;
+      padding: 16px 40px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid var(--main-btn-border);
+      background: #fff;
+      color: var(--main-btn-text);
+      font-size: 1.2rem;
+    }
+    .next-product:hover {
+      background: #f7b6c7;
+      border-color: #f7b6c7;
+      color: white;
     }
   </style>
 </head>
@@ -270,55 +223,52 @@
   </div>
 
   <div class="main-content">
-    <!-- 商品大图 -->
-    <img class="main-image" src="products/chiikawa/Chiikawa_Bee_Mascot__Chiikawa_/image_11.jpg" alt="Happy Holiday Mascot (Usagi)" />
-
-    <div class="detail-section">
-      <!-- 左侧小图轮播 -->
-      <div class="left-thumbs">
-        <div class="thumbs-container">
-          <img class="thumb-img active" src="products/chiikawa/Chiikawa_Bee_Mascot__Chiikawa_/image_13.jpg" alt="thumb1" />
-          <img class="thumb-img" src="products/chiikawa/Chiikawa_Bee_Mascot__Chiikawa_/image_14.jpg" alt="thumb2" />
-          <img class="thumb-img" src="products/chiikawa/Chiikawa_Bee_Mascot__Chiikawa_/image_15.jpg" alt="thumb3" />
-        </div>
-        <div class="thumb-nav">
-          <div class="thumb-dot active"></div>
-          <div class="thumb-dot"></div>
-          <div class="thumb-dot"></div>
-        </div>
-      </div>
-      <!-- 右侧产品信息 -->
-      <div class="right-info">
-        <div class="product-title">Happy Holiday Mascot (Usagi)</div>
-        <div class="product-price">¥1650</div>
-        <div class="product-detail">Size：H140×W80×D55mm</div>
-        <div class="product-detail">Material：Plush</div>
-        <a class="product-link" href="https://chiikawamarket.jp/en/collections/nuigurumi-mascot/products/4582662905641" target="_blank">
-          Official Website：https://chiikawamarket.jp/en/collections/nuigurumi-mascot/products/4582662905641
-        </a>
+    <div class="product-modal">
+      <div class="product-name">Chiikawa Bee Mascot (Usagi)</div>
+      <img class="product-image" src="../products/usagi/Chiikawa_Bee_Mascot__Usagi_/main.jpg" alt="Chiikawa Bee Mascot (Usagi)" />
+      <div class="button-group">
+        <button class="button confirm">This is the one!</button>
+        <button class="button">Try another match</button>
       </div>
     </div>
+    <button class="next-product">Try different description</button>
   </div>
 
   <script>
-    // 小图轮播逻辑
-    const thumbs = document.querySelectorAll('.thumb-img');
-    const dots = document.querySelectorAll('.thumb-dot');
-    let current = 0;
+    document.querySelector('.next-product').addEventListener('click', function() {
+      window.location.href = '../../index.html';
+    });
 
-    function showThumb(idx) {
-      thumbs.forEach((img, i) => {
-        img.classList.toggle('active', i === idx);
-      });
-      dots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === idx);
-      });
-      current = idx;
+    function getQueryParam(name) {
+      const url = new URL(window.location.href);
+      return url.searchParams.get(name);
     }
 
-    dots.forEach((dot, idx) => {
-      dot.addEventListener('click', () => showThumb(idx));
+    document.querySelector('.button:not(.confirm)').addEventListener('click', function() {
+      const q = getQueryParam('q');
+      const pages = getQueryParam('pages');
+      let idx = parseInt(getQueryParam('idx') || '0');
+      if (pages) {
+        const pageArr = pages.split(',');
+        if (pageArr.length <= 1) {
+          alert('没有更多相关商品');
+          return;
+        }
+        // 随机选一个不是当前 idx 的页面
+        let nextIdx;
+        do {
+          nextIdx = Math.floor(Math.random() * pageArr.length);
+        } while (nextIdx === idx && pageArr.length > 1);
+        const generatedDir = 'chiikawa_data/generated_pages/';
+        window.location.href =  pageArr[nextIdx] + "?q=" + encodeURIComponent(q) + "&pages=" + encodeURIComponent(pages) + "&idx=" + nextIdx;
+      } else {
+        window.location.href = '../../index.html';
+      }
+    });
+
+    document.querySelector('.button.confirm').addEventListener('click', function() {
+      alert('Product confirmed!');
     });
   </script>
 </body>
-</html>
+</html> 

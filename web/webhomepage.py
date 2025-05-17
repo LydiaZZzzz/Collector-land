@@ -74,7 +74,7 @@ st.markdown(
 image_path = "static/banner.png"
 if os.path.exists(image_path):
     banner = Image.open(image_path)
-    st.image(banner, use_container_width=True)
+    st.image(banner)
 else:
     st.warning("🚫 Banner image not found at static/banner.png")
 

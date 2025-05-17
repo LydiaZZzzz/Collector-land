@@ -1,7 +1,12 @@
-# Magic Archive - Chiikawa Merchandise Browser
+# 🧙‍♀️ Magic Archive - Chiikawa Merchandise Browser
 
+A merchandise exploration platform built around the beloved Japanese animation *Chiikawa*. This project allows fans to search for themed products using key character attributes and interact with product pop-ups and detail views in a smooth, visually engaging environment.
 
-## 🔧 Setup Instructions (Already set in the local file)
+---
+
+## 🔧 Setup Instructions
+
+Make sure you have Python 3 installed. Then run the following commands:
 
 ```bash
 python3 -m venv venv
@@ -11,79 +16,112 @@ pip install -r requirements.txt
 
 ---
 
-## 🧁 Project Scope  
-This project focuses on designing and developing a merchandise browsing platform based on the popular Japanese animation *Chiikawa*. The platform allows users to explore characters from the *Chiikawa* universe, view detailed character and product information, and save favorite merchandise.  
+## 🧁 Project Scope
 
-Core components include:
-- A homepage with filtering options  
-- Individual character profile pages  
-- Interactive product pop-ups  
-- A favorites collection page  
+This platform was designed and built to:
 
-The project also involves creating a solid information architecture and converting Figma designs into functional HTML using [Cursor](https://cursor.sh).
+- Allow fans to explore *Chiikawa* character-themed merchandise  
+- Enable fuzzy keyword-based product discovery (e.g., “magic”, “yellow”, “bow”)  
+- Present products in an engaging way using interactive pop-ups and detail pages  
+- Build a solid foundation for favorites/likes and cart functionalities  
 
----
-
-## 🎯 Target Users  
-The target users are fans of the *Chiikawa* animation series who are interested in discovering, collecting, and potentially purchasing themed merchandise. These users are likely to value:
-- Character storytelling  
-- Aesthetic visual design  
-- A smooth and well-organized browsing experience  
+The app is developed using Streamlit and HTML templates, with visuals designed in Figma and translated into code via [Cursor](https://cursor.sh).
 
 ---
 
-## ✨ Features  
+## 🎯 Target Users
 
-- **Homepage**  
-  - Large promotional banner featuring all *Chiikawa* characters  
-  - Character cards with filter functionality  
-  - Each card includes: image, name, introduction, release date, and movie/episode name  
+The target audience includes fans and collectors of *Chiikawa* merchandise who are:
 
-- **Character Page**  
-  - Full character information  
-  - Related merchandise cards  
-  - Filtering by release date and type  
-  - Favorite button for each item  
-
-- **Favorites Page**  
-  - Displays all items the user has favorited  
-  - Easy access to liked products  
-
-- **Product Pop-up**  
-  - Opens on click  
-  - Shows: product image, name, price (with price trend), and reference purchase links  
+- Interested in visual exploration of themed products  
+- Motivated by character storytelling and aesthetics  
+- Looking for a clean and organized browsing experience  
 
 ---
 
-## 🗓️ Timeline  
+## ✨ Features
 
-| Date Range     | Task                                                              |
-| -------------- | ----------------------------------------------------------------- |
-| April 11–18    | Information architecture                                          |
-| April 18–25    | Low-fidelity wireframes                                           |
-| April 25–May 2 | High-fidelity prototypes                                          |
-| **May 2–9**    | **Homepage, product pop-up, and product detail page development** |
-| May 9–16       | Character page development                                        |
-| May 16–23      | Favorites page & interactive logic                                |
-| May 23–30      | Final iteration and refinement                                    |
+### ✅ Implemented
 
+- **Homepage**
+  - Keyword-based search bar (supports fuzzy search)
+  - Visual promotional banner with characters
+  - Filterable character/product cards  
+
+- **Product Pop-up (generated page)**
+  - Displays matched product with image, name, price, and link
+  - "Try another match": cycles through other matching products
+  - "This is the one": navigates to the full product detail page
+
+- **Product Detail Page**
+  - Shows complete product info including:
+    - Large product image
+    - Detail images
+    - Description, material, dimensions, price
+    - Official purchase links
+
+### 🛠️ In Progress / Planned
+
+- **Favorites (Likes) Page**
+  - Users can like/favorite merchandise and view them in a dedicated page  
+
+- **Shopping Cart**
+  - A simple interface to collect selected products for potential purchase  
 
 ---
 
-## 📬 Contact  
+## 🗓️ Project Timeline
 
-For more details or project inquiries, please contact:  
-Yunqing Zhao Client Email: yzhao73@uw.edu
-Shangming Zhuo Developer Email: oiviauw@uw.edu  
-GitHub Repo: [https://github.com/LydiaZZzzz/Collector-land](https://github.com/LydiaZZzzz/Collector-land)
+| Date Range    | Task Description                                                       |
+|---------------|------------------------------------------------------------------------|
+| April 11–18   | Planned information architecture, user flows, and basic UI decisions   |
+| April 18–25   | Created low-fidelity wireframes for major pages                        |
+| April 25–May 2| Built high-fidelity UI in Figma, began HTML template conversion        |
+| May 2–9       | Developed homepage, fuzzy search logic, and product pop-up base        |
+| May 9–16      | Implemented full search-to-pop-up-to-detail flow, built product pages  |
+| May 16–23     | Finalizing favorites/likes and shopping cart functionality             |
+| May 23–30     | Final iteration, polish UI, documentation, and usability testing       |
+
+---
+
+## 📬 Contact
+
+For inquiries or collaboration, feel free to reach out:
+
+- **Yunqing Zhao** (Client) – yzhao73@uw.edu  
+- **Shangming Zhuo** (Developer) – oiviauw@uw.edu  
+- **GitHub Repo** – [https://github.com/LydiaZZzzz/Collector-land](https://github.com/LydiaZZzzz/Collector-land)
 
 ---
 
 ## 📌 Progress Log
 
-| Date  | Progress                                                                 |
-| 4.18 | Completed the planned information architecture, including user flows and core page structure. Initiated homepage development ahead of schedule using Streamlit. Created initial file and folder organization (`static/`, `webhomepage.py`, `requirements.txt`). Implemented a top navigation bar with fixed positioning and clickable buttons. Designed and overlaid interactive product hover dots on a visual banner. Documented setup instructions and development status clearly in `README.md`.                                                                                              |
-| 5.2  | Finished development of three key interfaces: `home.html`, `search.html`, and `product-detail.html`. Implemented a functional search bar on the homepage that navigates to the product pop-up. Built a product pop-up window with two working buttons: one for reshuffling products and one for returning to the homepage. Completed the product detail page layout, including a large image display and three-view switching feature. Also wrote an initial test file (`product-detail.test.js`) and resolved git push errors by submitting code via a protected-branch pull request from `dev`. |
-| Next | Planned for 5.9: Start character page development and integrate favorite toggling logic. Improve UI feedback (e.g. loading animations) and apply initial usability fixes based on internal testing.                                                                                                                                                                                                                                                                                                                                                                                               |
+| Date  | Progress Summary |
+|-------|------------------|
+| 4.25  | Completed the planned information architecture, including user flows and core page structure. Initiated homepage development ahead of schedule using Streamlit. Created initial file and folder organization (`static/`, `webhomepage.py`, `requirements.txt`). Implemented a top navigation bar with fixed positioning and clickable buttons. Designed and overlaid interactive product hover dots on a visual banner. Documented setup instructions and development status clearly in `README.md`. |
+| 5.9   | Learned how to implement fuzzy search logic; cleaned and structured the product information CSV (`chiikawa_data/products_test.csv`). |
+| 5.16   | Implemented search navigation from the homepage to the product pop-up (`generated-page`), allowing key features like “yellow”, “magic”, “bow”, or “magic wand” to trigger matching product pop-ups. Added “Try another match” logic: if other matches exist, another product is shown; if not, the page remains. Built product detail pages for all merchandise including name, main image, detail images, price, material, size, and official links. Enabled navigation from product pop-up to detail page via “This is the one” button. Major features are now complete. |
 
+---
 
+## 🔮 Future Plans
+
+- Refine UI animations and transitions for pop-up components  
+- Add loading indicators and responsive layout support  
+- Enable persistent user data (likes, cart) via local storage or backend  
+- Prepare for potential deployment on public hosting platform (e.g., Streamlit Cloud or Vercel)
+
+---
+
+## 🧪 How to Test
+
+You can test the keyword search functionality directly from the homepage. Try using inputs such as:
+
+- `yellow`  
+- `magic`  
+- `bow`  
+- `magic wand`  
+
+The system will display a matching product in a pop-up. Use “Try another match” to cycle through related products, or click “This is the one” to go to the full product detail page.
+
+---

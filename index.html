@@ -231,13 +231,13 @@ fixed_html = f"""
 
   <div class="main-content">
     <div class="promotion-img">
-        <img src="/Users/zhuoshangming/Desktop/collector-land/promotion2.png" alt="promotion" />
+        <img src="promotion2.png" alt="promotion" />
     </div>
 
     <div class="search-section">
       <div class="search-guide">Enter a product name or a fuzzy description to discover your favorites!</div>
-      <form class="search-bar" onsubmit="event.preventDefault(); window.location.href='search.html';">
-        <input type="text" placeholder="e.g. plush toy, keychain, mug..." />
+      <form class="search-bar" onsubmit="return searchProduct();">
+        <input type="text" placeholder="e.g. yellow, Usagi, bow..." />
         <button type="submit">Search</button>
       </form>
     </div>
@@ -248,5 +248,63 @@ fixed_html = f"""
       </svg>
     </div>
   </div>
+
+  <script>
+  const productKeywords = [
+    {name: "Ultra Magical Chiikawa Bad Version Mascot", keywords: ['Usagi', 'dress', 'bow', 'stars', 'black', 'gray', 'magic wand'], page: "chiikawa_data/generated_pages/Ultra_Magical_Chiikawa_Bad_Version_Mascot.html"},
+    {name: "Bir~thday Mascot (Usagi)", keywords: ['Usagi', 'light blue', 'blue', 'pajamas', 'pink bow', 'bow', 'hat', 'robe'], page: "chiikawa_data/generated_pages/Bir~thday_Mascot_(Usagi).html"},
+    {name: "Chiikawa Land Ukiki Mascot (Usagi)", keywords: ['Usagi', 'popcorn', 'bubbles', 'bath', 'jester hat', 'hat', 'red', 'white', 'stripes', 'one ear'], page: "chiikawa_data/generated_pages/Chiikawa_Land_Ukiki_Mascot_(Usagi).html"},
+    {name: "Chiikawa SUPPA……!!!! Mascot (Usagi)", keywords: ['Usagi', 'lemon', 'no clothes', 'SUPPA', 'yellow', 'yellow tag', 'tag'], page: "chiikawa_data/generated_pages/Chiikawa_SUPPA……!!!!_Mascot_(Usagi).html"},
+    {name: "Restaurant Hall Mascot (Usagi)", keywords: ['Usagi', 'waitress', 'red', 'white', 'stripes', 'headpiece', 'standing on one leg', 'yellow bow', 'bow', 'white apron', 'vertical stripes'], page: "chiikawa_data/generated_pages/Restaurant_Hall_Mascot_(Usagi).html"},
+    {name: "Fun Costume~! Mascot (Usagi)", keywords: ['Usagi', 'zombie', 'green', 'nails', 'blue', 'stitches', 'wings'], page: "chiikawa_data/generated_pages/Fun_Costume~!_Mascot_(Usagi).html"},
+    {name: "Chiikawa Bee Mascot (Usagi)", keywords: ['Usagi', 'bee', 'yellow', 'brown', 'wings', 'hovering'], page: "chiikawa_data/generated_pages/Chiikawa_Bee_Mascot_(Usagi).html"},
+    {name: "Happy Holiday Mascot (Usagi)", keywords: ['Usagi', 'Christmas', 'green', 'fluffy red ball', 'round glasses', 'glasses', 'sweater', 'turkey', 'red', 'red and green stripes'], page: "chiikawa_data/generated_pages/Happy_Holiday_Mascot_(Usagi).html"},
+    {name: "Chiikawa Super Magical Chiikawa Power-Up Mascot (Usagi)", keywords: ['Usagi', 'yellow', 'yellow bow', 'yellow dress', 'smiling star', 'magic wand', 'fairy', 'wings', 'magic'], page: "chiikawa_data/generated_pages/Chiikawa_Super_Magical_Chiikawa_Power-Up_Mascot_(Usagi).html"},
+    {name: "Chiikawa Easter Mascot (Usagi)", keywords: ['Usagi', 'eggshell', 'Easter', 'yellow', 'dots', 'removable hat'], page: "chiikawa_data/generated_pages/Chiikawa_Easter_Mascot_(Usagi).html"},
+  ];
+
+  function searchProduct() {
+    const input = document.querySelector('.search-bar input').value.trim().toLowerCase();
+    if (!input) return false;
+    let matches = [];
+    for (const prod of productKeywords) {
+      let score = prod.keywords.filter(k => input.includes(k.toLowerCase()) || k.toLowerCase().includes(input)).length;
+      if (score > 0) {
+        matches.push({prod, score});
+      }
+    }
+    matches.sort((a, b) => b.score - a.score);
+    if (matches.length > 0) {
+      const pages = matches.map(m => m.prod.page.split('/').pop()).join(',');
+      window.location.href = 'chiikawa_data/generated_pages/' + pages.split(',')[0] + "?q=" + encodeURIComponent(input) + "&pages=" + encodeURIComponent(pages) + "&idx=0";
+    } else {
+      alert('未找到相关商品');
+    }
+    return false;
+  }
+  document.querySelector('.search-bar').onsubmit = searchProduct;
+
+  function getQueryParam(name) {
+    const url = new URL(window.location.href);
+    return url.searchParams.get(name);
+  }
+
+  document.querySelector('.button:not(.confirm)').addEventListener('click', function() {
+    const q = getQueryParam('q');
+    const pages = getQueryParam('pages');
+    let idx = parseInt(getQueryParam('idx') || '0');
+    if (pages) {
+      const pageArr = pages.split(',');
+      if (pageArr.length <= 1) {
+        alert('没有更多相关商品');
+        return;
+      }
+      idx = (idx + 1) % pageArr.length;
+      window.location.href = pageArr[idx] + "?q=" + encodeURIComponent(q) + "&pages=" + encodeURIComponent(pages) + "&idx=" + idx;
+    } else {
+      window.location.href = '../index.html';
+    }
+  });
+  </script>
 </body>
 </html>
