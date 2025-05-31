@@ -249,7 +249,10 @@
     });
 
     document.querySelector('.button.confirm').addEventListener('click', function() {
-      alert('Product confirmed!');
+      // Build the detail page filename from the product name
+      var productName = document.querySelector('.product-name').textContent;
+      var detailFile = productName.replace(/\//g, '_').replace(/ /g, '_') + '.html';
+      window.location.href = '../product-detailed_pages/' + detailFile;
     });
   </script>
 </body>

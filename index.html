@@ -208,24 +208,54 @@ fixed_html = f"""
       padding: 0;
       line-height: 0;
     }
+    .navbar-user {
+      display: flex;
+      align-items: center;
+      margin-left: 1.5rem;
+    }
+    .navbar-right {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .navbar-login-btn {
+      padding: 6px 18px;
+      border-radius: 10px;
+      border: 2px solid #fff;
+      background: #fff;
+      color: #F69BAE;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .navbar-login-btn:hover {
+      background: #F69BAE;
+      color: #fff;
+    }
   </style>
 </head>
 <body>
   <div class="navbar">
-    <div class="navbar-logo">CollectorLand</div>
-    <div class="navbar-icons">
-      <a class="navbar-icon-group" href="#">
-        <svg class="navbar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-        </svg>
-        <div class="navbar-label">Likes</div>
-      </a>
-      <a class="navbar-icon-group" href="#">
-        <svg class="navbar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
-        </svg>
-        <div class="navbar-label">All Items</div>
-      </a>
+    <a class="navbar-logo" href="index.html">CollectorLand</a>
+    <div class="navbar-right">
+      <div class="navbar-icons">
+        <a class="navbar-icon-group" href="likes.html">
+          <svg class="navbar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+          <div class="navbar-label">Likes</div>
+        </a>
+        <a class="navbar-icon-group" href="overview.html">
+          <svg class="navbar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+          </svg>
+          <div class="navbar-label">All Items</div>
+        </a>
+      </div>
+      <div class="navbar-user">
+        <span id="navbar-username" style="margin-right:10px; font-weight:700;"></span>
+        <button id="navbar-login-btn" class="navbar-login-btn">Login</button>
+      </div>
     </div>
   </div>
 
@@ -289,21 +319,34 @@ fixed_html = f"""
     return url.searchParams.get(name);
   }
 
-  document.querySelector('.button:not(.confirm)').addEventListener('click', function() {
-    const q = getQueryParam('q');
-    const pages = getQueryParam('pages');
-    let idx = parseInt(getQueryParam('idx') || '0');
-    if (pages) {
-      const pageArr = pages.split(',');
-      if (pageArr.length <= 1) {
-        alert('没有更多相关商品');
-        return;
+  document.addEventListener('DOMContentLoaded', function() {
+    function updateNavbarUser() {
+      const user = JSON.parse(localStorage.getItem('user'));
+      const usernameSpan = document.getElementById('navbar-username');
+      const loginBtn = document.getElementById('navbar-login-btn');
+      if (user && user.username) {
+        usernameSpan.textContent = user.username;
+        loginBtn.textContent = 'Logout';
+      } else {
+        usernameSpan.textContent = '';
+        loginBtn.textContent = 'Login';
       }
-      idx = (idx + 1) % pageArr.length;
-      window.location.href = pageArr[idx] + "?q=" + encodeURIComponent(q) + "&pages=" + encodeURIComponent(pages) + "&idx=" + idx;
-    } else {
-      window.location.href = '../index.html';
     }
+
+    document.getElementById('navbar-login-btn').onclick = function() {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user && user.username) {
+        // Logout
+        localStorage.removeItem('user');
+        updateNavbarUser();
+        location.reload();
+      } else {
+        // Always go to login page
+        window.location.href = 'login.html';
+      }
+    };
+
+    updateNavbarUser();
   });
   </script>
 </body>

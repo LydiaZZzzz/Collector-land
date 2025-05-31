@@ -47,6 +47,30 @@
       letter-spacing: 0.18em;
       white-space: nowrap;
     }
+    .navbar-right {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .navbar-user {
+      display: flex;
+      align-items: center;
+      margin-left: 1.5rem;
+    }
+    .navbar-login-btn {
+      padding: 6px 18px;
+      border-radius: 10px;
+      border: 2px solid #fff;
+      background: #fff;
+      color: #F69BAE;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .navbar-login-btn:hover {
+      background: #F69BAE;
+      color: #fff;
+    }
     .navbar-icons {
       display: flex;
       gap: 1rem;
@@ -252,20 +276,26 @@
 </head>
 <body>
   <div class="navbar">
-    <div class="navbar-logo">CollectorLand</div>
-    <div class="navbar-icons">
-      <a class="navbar-icon-group" href="#">
-        <svg class="navbar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-        </svg>
-        <div class="navbar-label">Likes</div>
-      </a>
-      <a class="navbar-icon-group" href="#">
-        <svg class="navbar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
-        </svg>
-        <div class="navbar-label">All Items</div>
-      </a>
+    <a class="navbar-logo" href="../../index.html">CollectorLand</a>
+    <div class="navbar-right">
+      <div class="navbar-icons">
+        <a class="navbar-icon-group" href="../../likes.html">
+          <svg class="navbar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+          <div class="navbar-label">Likes</div>
+        </a>
+        <a class="navbar-icon-group" href="../../overview.html">
+          <svg class="navbar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+          </svg>
+          <div class="navbar-label">All Items</div>
+        </a>
+      </div>
+      <div class="navbar-user">
+        <span id="navbar-username" style="margin-right:10px; font-weight:700;"></span>
+        <button id="navbar-login-btn" class="navbar-login-btn">Login</button>
+      </div>
     </div>
   </div>
 
@@ -287,6 +317,8 @@
           <div class="thumb-dot"></div>
         </div>
       </div>
+      <!-- Like Button -->
+      <button id="like-btn" style="align-self: flex-start; margin-top: 16px; margin-left: 0; background: #fff; color: #E88BA0; border: 2px solid #E88BA0; border-radius: 12px; padding: 8px 24px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: background 0.2s, color 0.2s;">❤️ Like</button>
       <!-- 右侧产品信息 -->
       <div class="right-info">
         <div class="product-title">Chiikawa Land Ukiki Mascot (Usagi)</div>
@@ -319,6 +351,123 @@
     dots.forEach((dot, idx) => {
       dot.addEventListener('click', () => showThumb(idx));
     });
+
+    // Like button logic
+    const likeBtn = document.getElementById('like-btn');
+    const productTitle = document.querySelector('.product-title').textContent.trim();
+
+    function updateLikeBtn(isLiked) {
+      likeBtn.textContent = isLiked ? '❤️ Liked' : '❤️ Like';
+      likeBtn.style.background = isLiked ? '#F69BAE' : '#fff';
+      likeBtn.style.color = isLiked ? '#fff' : '#E88BA0';
+    }
+
+    function getUserLikes(user) {
+      if (!user || !user.username) return [];
+      try {
+        return JSON.parse(localStorage.getItem('likes_' + user.username) || '[]');
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function setUserLikes(user, likes) {
+      if (!user || !user.username) return;
+      localStorage.setItem('likes_' + user.username, JSON.stringify(likes));
+    }
+
+    // On page load, set button state
+    const user = JSON.parse(localStorage.getItem('user'));
+    let isLiked = false;
+    if (user && user.username) {
+      const likes = getUserLikes(user);
+      isLiked = likes.includes(productTitle);
+      updateLikeBtn(isLiked);
+    }
+
+    likeBtn.onclick = async function() {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (!user || !user.userId || !user.username) {
+        alert('Please log in to like this product.');
+        return;
+      }
+      if (isLiked) {
+        // UNLIKE logic
+        try {
+          const res = await fetch('/api/like', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId: user.userId, product: productTitle })
+          });
+          const data = await res.json();
+          if (data.success) {
+            // Update localStorage
+            let likes = getUserLikes(user);
+            likes = likes.filter(name => name !== productTitle);
+            setUserLikes(user, likes);
+            isLiked = false;
+            updateLikeBtn(false);
+            alert('Unliked!');
+          } else {
+            alert(data.error || 'Failed to unlike.');
+          }
+        } catch (e) {
+          alert('Network error.');
+        }
+        return;
+      }
+      // LIKE logic
+      try {
+        const res = await fetch('/api/like', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId: user.userId, product: productTitle })
+        });
+        const data = await res.json();
+        if (data.success) {
+          // Update localStorage
+          let likes = getUserLikes(user);
+          if (!likes.includes(productTitle)) {
+            likes.push(productTitle);
+            setUserLikes(user, likes);
+          }
+          isLiked = true;
+          updateLikeBtn(true);
+          alert('Liked!');
+        } else {
+          alert(data.error || 'Failed to like.');
+        }
+      } catch (e) {
+        alert('Network error.');
+      }
+    };
   </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      function updateNavbarUser() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        const usernameSpan = document.getElementById('navbar-username');
+        const loginBtn = document.getElementById('navbar-login-btn');
+        if (user && user.username) {
+          usernameSpan.textContent = user.username;
+          loginBtn.textContent = 'Logout';
+        } else {
+          usernameSpan.textContent = '';
+          loginBtn.textContent = 'Login';
+        }
+      }
+      document.getElementById('navbar-login-btn').onclick = function() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user && user.username) {
+          localStorage.removeItem('user');
+          updateNavbarUser();
+          location.reload();
+        } else {
+          window.location.href = '../../login.html';
+        }
+      };
+      updateNavbarUser();
+    });
+    </script>
 </body>
 </html> 

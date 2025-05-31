@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Likes - CollectorLand</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Baloo+2:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --main-bg: #F69BAE;
+      --main-white: #fff;
+      --main-title: #fff;
+      --main-text: #4a3c3b;
+      --main-subtitle: #4a3c3b;
+      --main-border: #F69BAE;
+      --main-btn-bg: #fff;
+      --main-btn-text: #4a3c3b;
+      --main-btn-border: #F9C5CE;
+      --main-pink: #F69BAE;
+    }
+    body {
+      margin: 0;
+      font-family: 'Quicksand', 'Baloo 2', Arial, sans-serif;
+      background: var(--main-bg);
+      color: var(--main-text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 70px;
+      background: var(--main-bg);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 10;
+      padding: 0 4vw;
+      box-sizing: border-box;
+    }
+    .navbar-logo {
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: var(--main-title);
+      letter-spacing: 0.18em;
+      white-space: nowrap;
+    }
+    .main-content {
+      margin-top: 90px;
+      padding: 32px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      width: 100%;
+      max-width: 1200px;
+    }
+    .overview-card {
+      background: var(--main-white);
+      border: 3px solid var(--main-pink);
+      border-radius: 18px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px 16px 16px;
+      text-align: center;
+      transition: box-shadow 0.2s, transform 0.2s;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .overview-card:hover {
+      box-shadow: 0 8px 32px rgba(246,155,174,0.18);
+      transform: translateY(-4px) scale(1.03);
+    }
+    .overview-img {
+      width: 100%;
+      max-width: 220px;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 18px;
+      margin-bottom: 18px;
+      background: #f7f7f7;
+      border: 2px solid #f9c5ce;
+    }
+    .overview-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--main-text);
+      margin-top: 0;
+      margin-bottom: 0;
+      word-break: break-word;
+    }
+    @media (max-width: 900px) {
+      .overview-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+    }
+    @media (max-width: 600px) {
+      .overview-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .main-content {
+        padding: 16px 2vw;
+      }
+    }
+    .not-logged-in {
+      margin-top: 120px;
+      font-size: 1.3rem;
+      color: #b94a6b;
+      text-align: center;
+    }
+    .login-link {
+      color: #F69BAE;
+      font-weight: bold;
+      text-decoration: underline;
+      margin-left: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <a class="navbar-logo" href="index.html">CollectorLand</a>
+
+  </div>
+  <div class="main-content">
+    <div class="overview-grid" id="overviewGrid">
+      <!-- Cards will be injected here by JS -->
+    </div>
+    <div class="not-logged-in" id="notLoggedIn" style="display:none">
+      请先登录以查看你喜欢的商品。
+      <a class="login-link" href="login.html">去登录</a>
+    </div>
+    <div class="not-logged-in" id="noLikes" style="display:none">
+      你还没有喜欢任何商品。
+    </div>
+  </div>
+  <script>
+    // Product data (from products_test.csv)
+    const products = [
+      { name: "Ultra Magical Chiikawa Bad Version Mascot", img: "products/usagi/_Pre-order__Chiikawa_Ultra_Magical_Chiikawa_Bad_Version_Mascot__Usagi___Shipping_starts_from_late_July_2024__cannot_be_canceled_even_if_delayed__cannot_be_purchased_with_other_items__not_eligible_for_campaigns_/main.jpg" },
+      { name: "Bir~thday Mascot (Usagi)", img: "products/usagi/Chiikawa_Bir_thday_Mascot__Usagi_/main.jpg" },
+      { name: "Chiikawa Land Ukiki Mascot (Usagi)", img: "products/usagi/Chiikawa_Land_Ukiki_Mascot__Usagi_/main.jpg" },
+      { name: "Chiikawa SUPPA……!!!! Mascot (Usagi)", img: "products/usagi/Chiikawa_SUPPA_______Mascot__Usagi_/main.jpg" },
+      { name: "Restaurant Hall Mascot (Usagi)", img: "products/usagi/Chiikawa_Chiikawa_Restaurant_Hall_Mascot__Usagi_/main.jpg" },
+      { name: "Fun Costume~! Mascot (Usagi)", img: "products/usagi/Chiikawa_Fun_Costume___Mascot__Zombie_Usagi_/main.jpg" },
+      { name: "Chiikawa Bee Mascot (Usagi)", img: "products/usagi/Chiikawa_Bee_Mascot__Usagi_/main.jpg" },
+      { name: "Happy Holiday Mascot (Usagi)", img: "products/usagi/_Pre-order__Chiikawa_Happy_Holiday_Mascot__Usagi___Shipping_starts_from_late_April_2024__No_cancellation_allowed_in_case_of_delay__/main.jpg" },
+      { name: "Chiikawa Super Magical Chiikawa Power-Up Mascot (Usagi)", img: "products/usagi/Chiikawa_Super_Magical_Chiikawa_Power-Up_Mascot__Usagi_/main.jpg" },
+      { name: "Chiikawa Easter Mascot (Usagi)", img: "products/usagi/Chiikawa_Easter_Mascot__Usagi_/main.jpg" }
+    ];
+    const grid = document.getElementById('overviewGrid');
+    const notLoggedIn = document.getElementById('notLoggedIn');
+    const noLikes = document.getElementById('noLikes');
+    // Check login
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user || !user.username) {
+      notLoggedIn.style.display = '';
+      grid.style.display = 'none';
+      noLikes.style.display = 'none';
+    } else {
+      // Get likes for this user
+      const likes = JSON.parse(localStorage.getItem('likes_' + user.username) || '[]');
+      if (!likes.length) {
+        noLikes.style.display = '';
+        grid.style.display = 'none';
+      } else {
+        // Only show liked products
+        const likedProducts = products.filter(prod => likes.includes(prod.name));
+        if (!likedProducts.length) {
+          noLikes.style.display = '';
+          grid.style.display = 'none';
+        } else {
+          likedProducts.forEach(prod => {
+            // Build detail page filename
+            const detailFile = 'chiikawa_data/product-detailed_pages/' + prod.name.replace(/\//g, '_').replace(/ /g, '_') + '.html';
+            const card = document.createElement('a');
+            card.className = 'overview-card';
+            card.href = detailFile;
+            card.innerHTML = `
+              <img class="overview-img" src="${prod.img}" alt="${prod.name}" />
+              <div class="overview-title">${prod.name}</div>
+            `;
+            grid.appendChild(card);
+          });
+        }
+      }
+    }
+  </script>
+</body>
+</html> 
