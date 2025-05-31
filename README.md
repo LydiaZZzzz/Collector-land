@@ -65,7 +65,7 @@ The target audience includes fans and collectors of *Chiikawa* merchandise who a
 - **Favorites (Likes) Page**
   - Users can like/favorite merchandise and view them in a dedicated page  
 
-- **All Items**
+- **All Items Page**
   - A simple interface to collect selected products for potential purchase  
 
 ---
