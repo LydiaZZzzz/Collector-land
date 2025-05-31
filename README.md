@@ -65,7 +65,7 @@ The target audience includes fans and collectors of *Chiikawa* merchandise who a
 - **Favorites (Likes) Page**
   - Users can like/favorite merchandise and view them in a dedicated page  
 
-- **Shopping Cart**
+- **All Items**
   - A simple interface to collect selected products for potential purchase  
 
 ---
@@ -101,15 +101,8 @@ For inquiries or collaboration, feel free to reach out:
 | 4.25  | Completed the planned information architecture, including user flows and core page structure. Initiated homepage development ahead of schedule using Streamlit. Created initial file and folder organization (`static/`, `webhomepage.py`, `requirements.txt`). Implemented a top navigation bar with fixed positioning and clickable buttons. Designed and overlaid interactive product hover dots on a visual banner. Documented setup instructions and development status clearly in `README.md`. |
 | 5.9   | Learned how to implement fuzzy search logic; cleaned and structured the product information CSV (`chiikawa_data/products_test.csv`). |
 | 5.16   | Implemented search navigation from the homepage to the product pop-up (`generated-page`), allowing key features like “yellow”, “magic”, “bow”, or “magic wand” to trigger matching product pop-ups. Added “Try another match” logic: if other matches exist, another product is shown; if not, the page remains. Built product detail pages for all merchandise including name, main image, detail images, price, material, size, and official links. Enabled navigation from product pop-up to detail page via “This is the one” button. Major features are now complete. |
+| 5.30   | Completed Register and Login Functions. Also achieved the Likes and All items Pages. |
 
----
-
-## 🔮 Future Plans
-
-- Refine UI animations and transitions for pop-up components  
-- Add loading indicators and responsive layout support  
-- Enable persistent user data (likes, cart) via local storage or backend  
-- Prepare for potential deployment on public hosting platform (e.g., Streamlit Cloud or Vercel)
 
 ---
 
