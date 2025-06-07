@@ -46,6 +46,19 @@
       color: var(--main-title);
       letter-spacing: 0.18em;
       white-space: nowrap;
+      text-decoration: none !important;
+      border-bottom: none !important;
+    }
+    .navbar-label {
+      font-size: 0.8rem;
+      color: var(--main-title);
+      font-weight: 700;
+      text-transform: uppercase;
+      white-space: nowrap;
+      text-align: center;
+      transition: all 0.3s ease;
+      border-bottom: none !important;
+      text-decoration: none !important;
     }
     .main-content {
       margin-top: 90px;
@@ -124,6 +137,86 @@
       text-decoration: underline;
       margin-left: 8px;
     }
+    .login-content {
+      margin-top: 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+    }
+    .login-section {
+      width: 90vw;
+      max-width: 400px;
+      background: var(--main-white);
+      border-radius: 24px;
+      padding: 32px 24px 24px 24px;
+      text-align: center;
+      border: 2px solid var(--main-btn-border);
+      box-shadow: 0 4px 24px rgba(246,155,174,0.08);
+    }
+    .login-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--main-bg);
+      margin-bottom: 18px;
+    }
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .login-form input {
+      padding: 12px;
+      border-radius: 10px;
+      border: 2px solid var(--main-btn-border);
+      font-size: 1rem;
+      outline: none;
+      background: #fff;
+      color: var(--main-text);
+      transition: border 0.2s;
+    }
+    .login-form input:focus {
+      border: 2px solid #F69BAE;
+    }
+    .login-form button {
+      padding: 12px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border: 2px solid var(--main-btn-border);
+      border-radius: 10px;
+      background: var(--main-bg);
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.2s, border 0.2s;
+    }
+    .login-form button:hover {
+      background: #e88ba0;
+      border: 2px solid #e88ba0;
+    }
+    .register-link {
+      margin-top: 18px;
+      font-size: 1rem;
+      color: var(--main-bg);
+      text-decoration: none;
+      font-weight: 700;
+      display: inline-block;
+      transition: color 0.2s;
+    }
+    .register-link:hover {
+      color: #e88ba0;
+      text-decoration: underline;
+    }
+    .navbar a,
+    .navbar a:link,
+    .navbar a:visited,
+    .navbar a:hover,
+    .navbar a:active,
+    .navbar-label,
+    .navbar-logo {
+      text-decoration: none !important;
+      border-bottom: none !important;
+    }
   </style>
 </head>
 <body>
@@ -136,11 +229,22 @@
       <!-- Cards will be injected here by JS -->
     </div>
     <div class="not-logged-in" id="notLoggedIn" style="display:none">
-      请先登录以查看你喜欢的商品。
-      <a class="login-link" href="login.html">去登录</a>
+      Please log in to view your liked items.
+      <div class="login-content" style="margin-top: -48px;">
+        <div class="login-section">
+          <div class="login-title">Login</div>
+          <form class="login-form" id="quickLoginForm" autocomplete="off">
+            <input type="text" name="username" placeholder="Username or Email" required />
+            <input type="password" name="password" placeholder="Password" required />
+            <button type="submit">Login</button>
+          </form>
+          <div id="quick-login-error" style="color:#b94a6b; margin-top:6px; font-size:0.95rem;"></div>
+          <a class="register-link" href="login.html">Don't have an account? Register</a>
+        </div>
+      </div>
     </div>
     <div class="not-logged-in" id="noLikes" style="display:none">
-      你还没有喜欢任何商品。
+      You haven't liked any items yet.
     </div>
   </div>
   <script>
@@ -193,6 +297,34 @@
           });
         }
       }
+    }
+    // Quick login logic (copied from login.html, but reloads likes page on success)
+    const quickLoginForm = document.getElementById('quickLoginForm');
+    if (quickLoginForm) {
+      quickLoginForm.onsubmit = async function(e) {
+        e.preventDefault();
+        const form = e.target;
+        const username = form.username.value.trim();
+        const password = form.password.value;
+        const errorDiv = document.getElementById('quick-login-error');
+        errorDiv.textContent = '';
+        try {
+          const res = await fetch('/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+          });
+          const data = await res.json();
+          if (data.success) {
+            localStorage.setItem('user', JSON.stringify({ username: data.username, userId: data.userId }));
+            location.reload();
+          } else {
+            errorDiv.textContent = data.error || 'Login failed.';
+          }
+        } catch (err) {
+          errorDiv.textContent = 'Network error.';
+        }
+      };
     }
   </script>
 </body>

@@ -45,6 +45,8 @@
       color: var(--main-title);
       letter-spacing: 0.18em;
       white-space: nowrap;
+      text-decoration: none !important;
+      border-bottom: none !important;
     }
     .navbar-right {
       display: flex;
@@ -114,6 +116,7 @@
       white-space: nowrap;
       text-align: center;
       transition: all 0.3s ease;
+      text-decoration: none !important;
       border-bottom: none !important;
     }
     .navbar-icon-group:hover .navbar-label {
@@ -224,6 +227,17 @@
       background: #f7b6c7;
       border-color: #f7b6c7;
       color: white;
+    }
+    /* 强制去除导航栏所有链接的下划线 */
+    .navbar a,
+    .navbar a:link,
+    .navbar a:visited,
+    .navbar a:hover,
+    .navbar a:active,
+    .navbar-label,
+    .navbar-logo {
+      text-decoration: none !important;
+      border-bottom: none !important;
     }
   </style>
 </head>
